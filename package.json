@@ -20,7 +20,7 @@
   "scripts": {
     "build": "tsc",
     "lint": "eslint .",
-    "test": "eslint . && tsc && nyc ava"
+    "test": "nyc ava"
   },
   "peerDependencies": {
     "typescript": "^4.3.2"

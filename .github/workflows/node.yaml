@@ -25,4 +25,6 @@ jobs:
       - run: npm ci
       - run: npm install --save-dev typescript@${{ matrix.typescript }}
       - run: npm list --depth=0
+      - run: npm run build
+      - run: npm run lint
       - run: npm test
