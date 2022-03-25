@@ -1,6 +1,6 @@
 {
   "name": "typescript-transformer-rename-private",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "TypeScript transformer to rename private properties and methods to allow mangling",
   "keywords": [
     "typescript",
