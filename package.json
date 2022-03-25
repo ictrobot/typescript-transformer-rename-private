@@ -16,9 +16,16 @@
   },
   "license": "MIT",
   "author": "ictrobot",
-  "main": "transformer.js",
+  "main": "./dist/cjs/transformer.js",
+  "module": "./dist/esm/transformer.js",
+  "exports": {
+    ".": {
+      "require":  "./dist/cjs/transformer.js",
+      "default": "./dist/esm/transformer.js"
+    }
+  },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc -p tsconfig.json && tsc -p tsconfig.json -m es2015 --outDir dist/esm && node -e \"require('fs').writeFileSync('./dist/esm/package.json', '{\\n    \\\"type\\\": \\\"module\\\"\\n}\\n')\"",
     "lint": "eslint .",
     "test": "nyc ava"
   },
@@ -35,7 +42,8 @@
     "ts-node": "^10.7.0"
   },
   "files": [
-    "transformer.js",
-    "transformer.d.ts"
+    "dist/cjs/*",
+    "dist/esm/*",
+    "transformer.ts"
   ]
 }
