@@ -52,10 +52,19 @@ export const RenamePrivateTransformer = (fn?: RenameFunction) => (program: ts.Pr
         }
 
         // must recurse on node.expression for nested accesses regardless of the symbol
-        return context.factory.createElementAccessExpression(
-            ts.visitNode(node.expression, visitor),
-            isPrivateSymbol(symbol) ? context.factory.createStringLiteral(rename(symbol)) : node.argumentExpression
-        );
+        const index = isPrivateSymbol(symbol) ? context.factory.createStringLiteral(rename(symbol)) : node.argumentExpression;
+        if (ts.isElementAccessChain(node)) {
+            return context.factory.createElementAccessChain(
+                ts.visitNode(node.expression, visitor),
+                node.questionDotToken,
+                index
+            );
+        } else {
+            return context.factory.createElementAccessExpression(
+                ts.visitNode(node.expression, visitor),
+                index
+            );
+        }
     };
 
     const handleBindingElement: Handler<ts.BindingElement> = (node, visitor, context) => {

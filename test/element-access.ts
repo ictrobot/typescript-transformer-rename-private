@@ -70,3 +70,20 @@ export class Test {
     }
 }\n`.trimStart());
 });
+
+test("optional chaining", t => {
+    t.is(compile(`
+export class Test {
+    private privateField: {[k: string]: {[k2: string]: string}} = {};
+
+    test() {
+        return this.privateField["hello"]?.["world"];
+    }
+}\n`.trimStart()), `
+export class Test {
+    __private_privateField = {};
+    test() {
+        return this.__private_privateField["hello"]?.["world"];
+    }
+}\n`.trimStart());
+});
